@@ -1,0 +1,146 @@
+# **BankApp - Financial Management & Pix Key System**
+BankApp is a microservice developed with **Spring Boot** for financial management, integrating features such as account management, transactions, and Pix key handling. It leverages modern technologies to ensure high performance, security, and efficient memory usage.
+## **📋 Prerequisites**
+Ensure the following tools are installed on your system before starting:
+- **Java 21** (JDK 21+)
+- **Apache Maven** (3.6+)
+- **Docker** (optional, for running PostgreSQL)
+- **Git** (to clone the repository)
+
+## **🚀 Project Configuration**
+
+### **📥 Clone the Repository**
+Run the following commands to clone and navigate into the project directory:
+``` bash
+git clone https://github.com/your-repository/BankApp.git
+cd BankApp
+```
+### **⚙️ Configuration Options**
+You can configure the project in two ways: **with database integration** or **without database integration**. Choose one of the options below:
+#### **🏷️ Option A: Running Without a Database**
+This option disables database integration, running the application solely with in-memory storage.
+1. Edit the `application.yml` file: Navigate to `src/main/resources/application.yml` and disable the PostgreSQL configuration by commenting out:
+``` yaml
+   # spring.datasource.url=jdbc:postgresql://db:5432/bankapp
+   # spring.datasource.username=your_user
+   # spring.datasource.password=your_password
+   # spring.jpa.hibernate.ddl-auto=update
+   spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+```
+#### **🏷️ Option B: Using PostgreSQL**
+1. **Create and configure the `.env` file**: Create the environment configuration file from the example provided:
+``` bash
+   cp .env.example .env
+```
+Edit the `.env` file with your database credentials:
+``` env
+   DATABASE_HOST=localhost
+   DATABASE_PORT=5432
+   DATABASE_NAME=bankapp
+   DATABASE_USER=your_user
+   DATABASE_PASSWORD=your_password
+```
+1. **Start PostgreSQL using Docker**: Run this command to initialize the database:
+``` bash
+   docker-compose up -d db
+```
+## **▶️ Running the Application**
+Choose one of the methods below to run the project:
+### **🔹 Running Locally (Without Docker)**
+Ensure all prerequisites are installed and your database (if used) is running:
+``` bash
+mvn spring-boot:run
+```
+### **🔹 Running with Docker**
+Execute the following command to run the project with Docker:
+``` bash
+docker-compose up --build
+```
+## **✅ Testing**
+### **🔹 Run Tests (H2 In-memory Database):**
+Execute the tests to verify that the application works correctly:
+``` bash
+mvn test
+```
+### **🔹 Build Without Running Tests:**
+If you want to skip tests:
+``` bash
+mvn clean package -DskipTests
+```
+## **📄 API Endpoints**
+Below are the main endpoints for interacting with the application:
+### **📝 Manage Pix Keys**
+
+| HTTP Method | Endpoint | Description |
+| --- | --- | --- |
+| `POST` | `/api/pix` | Registers a new Pix key |
+| `GET` | `/api/pix` | Retrieves a list of all Pix keys |
+| `GET` | `/api/pix/{id}` | Gets a specific Pix key by ID |
+| `GET` | `/api/pix/key/{key}` | Searches for a Pix key by its value |
+### **🔍 Health Check**
+Check if the service is running with:
+```
+GET /actuator/health
+```
+## **📦 Single Setup Script**
+To simplify the setup and execution process, a single script is provided to handle all required steps.
+1. **Create the `setup.sh` file**: Create a file called `setup.sh` in the root directory of the project:
+``` bash
+   touch setup.sh
+   chmod +x setup.sh
+```
+1. **Add the following content to `setup.sh`**:
+``` bash
+   #!/bin/bash
+   echo "📦 Starting BankApp configuration..."
+
+   echo "🔗 Cloning the repository..."
+   git clone https://github.com/your-repository/BankApp.git
+
+   cd BankApp || exit
+
+   echo "⚙️ Configuring environment..."
+
+   if [ ! -f ".env" ]; then
+       echo "📝 Creating .env file from example..."
+       cp .env.example .env
+   fi
+
+   echo "🐳 Starting PostgreSQL database with Docker..."
+   docker-compose up -d db
+
+   echo "🏗️ Building the application..."
+   mvn clean package -DskipTests
+
+   echo "🚀 Starting the application..."
+   docker-compose up --build
+
+   echo "✅ Configuration complete! Access the application at http://localhost:8080."
+```
+1. **Run the script**:
+``` bash
+   ./setup.sh
+```
+## **ℹ️ Important Notes**
+- For production environments, replace in the `.env` file with the actual database host. `localhost`
+- Ensure `.jasper` files are added and validated in the directory:
+```
+  src/main/resources/reports/
+```
+- Database integration is optional. The application can run entirely in memory.
+
+## **🛑 Cleanup: Stop and Remove Docker Services**
+To stop and clean all running Docker services:
+``` bash
+docker-compose down -v
+```
+## **💡 Contributing**
+Contributions are welcome! To get started:
+1. Fork the repository.
+2. Create a feature branch (`git checkout -b feature/your-feature-name`).
+3. Commit your changes (`git commit -am 'Add a new feature'`).
+4. Push your branch (`git push origin feature/your-feature-name`).
+5. Open a **Pull Request**.
+
+## **👥 Authors**
+- Your Name - [Your GitHub Profile](https://github.com/Vinis22)

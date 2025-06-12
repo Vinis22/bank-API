@@ -1,0 +1,73 @@
+# === Java / Maven / Gradle ===
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+.gradle/
+.mvn/
+pom.xml.versionsBackup
+pom.xml.releaseBackup
+dependency-reduced-pom.xml
+release.properties
+
+# === IDEs ===
+.idea/
+*.iws
+*.ipr
+*.iml
+.project
+.classpath
+.settings/
+.vscode/
+.vscode/settings.json
+
+# === Node.js ===
+node_modules/
+.npm/
+
+# === Logs ===
+*.log
+*.tmp
+*.temp
+*.out
+*.bak
+*.swp
+*.pid
+*.seed
+hs_err_pid*
+.debug/
+
+# === Sistem Operational ===
+.DS_Store
+Thumbs.db
+
+# === Configs Sensitives ===
+application.properties
+application.yaml
+application.yml
+.env
+*.env
+
+!application.properties.example
+!application.yaml.example
+!application.yml.example
+
+# === Docker ===
+.dockerignore
+.docker/
+docker-compose.yml
+docker-compose.override.yml
+!docker-compose.example.yml
+
+# === keys ===
+*.key
+*.crt
+*.pem
+*.p12
+*.jks
+
+# === databases ===
+*.sql
+*.backup
