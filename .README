@@ -1,162 +1,150 @@
-# **BankApp - Financial Management & Pix Key System**
+bank-API - Financial Management Microservice and Pix Key System
+Project developed with Spring Boot for financial management, integrating features such as account management, transactions and Pix keys. The service is optimized for high performance, security and efficient use of memory, with support for PostgreSQL and in-memory mode for quick testing.
 
-BankApp is a microservice developed with **Spring Boot** for financial management, integrating features such as account management, transactions and Pix key system. It uses modern technologies to ensure high performance, security and efficiency in memory usage.
+📋 Requirements
+Java 21 (JDK 21+)
 
-## **📋 Prerequisites**
+Apache Maven 3.6+
 
-Make sure the following tools are installed on your system:
+Docker (optional, to run PostgreSQL)
 
-- **Java 21** (JDK 21+)
-- **Apache Maven** (3.6+)
-- **Docker** (optional, to run PostgreSQL)
-- **Git** (to clone the repository)
+Git
 
-## **⚙️ Single Script Configuration and Execution**
+🚀 Project Configuration
+1. Clone the repository:
+bash
+Copy
+Edit
+git clone https://github.com/Vinis22/bank-API.git
+cd bank-API
+2. Environment Configuration
+Create the .env file based on the example:
 
-This project provides an **automated script** to quickly configure and run the application.
-
-### **🚀 Steps Automated by the Script:**
-
-1. Cloning the repository
-
-2. Creating the `.env` file
-
-3. Initializing the database with Docker
-
-4. Building the application
-
-5. Initializing the backend via Docker Compose
-
-## **📦 Running the Setup**
-
-1. **Create the `setup.sh` file** in the desired directory:
-```bash
-touch setup.sh && chmod +x setup.sh
-```
-
-2. **Copy and paste the content below into `setup.sh`:**
-```bash
-#!/bin/bash
-
-echo "📦 Starting BankApp setup..."
-
-REPO_URL="https://github.com/Vinis22/dockerized-pdf-report-generator.git"
-PROJECT_NAME="BankApp"
-
-echo "🔗 Cloning the repository..."
-git clone "$REPO_URL" "$PROJECT_NAME"
-cd "$PROJECT_NAME" || exit
-
-echo "⚙️ Setting up environment..."
-
-if [ ! -f ".env" ]; then
-echo "📝 Creating .env file from example..."
+bash
+Copy
+Edit
 cp .env.example .env
-fi
+Edit the .env with your PostgreSQL database credentials:
 
-echo "🐳 Initializing PostgreSQL database with Docker..."
-docker-compose up -d db
-
-echo "🏗️ Building the application..."
-mvn clean package -DskipTests
-
-echo "🚀 Uploading the application with Docker..."
-docker-compose up --build
-
-echo "✅ Application available at: http://localhost:8080"
-```
-
-3. **Run the script:**
-```bash
-./setup.sh
-```
-
-## **🧪 Tests**
-
-- Run all tests with H2 (in-memory database):
-```bash
-mvn test
-```
-
-- Build without running the tests:
-```bash
-mvn clean package -DskipTests
-```
-
-## **📄 API Endpoints**
-
-### 🔑 Pix Key Management
-
-| HTTP Method | Endpoint | Description |
-|-------------|------------------------|------------------------------------|
-| `POST` | `/api/pix` | Register a new Pix key |
-| `GET` | `/api/pix` | List all Pix keys |
-| `GET` | `/api/pix/{id}` | Query Pix key by ID |
-| `GET` | `/api/pix/key/{key}` | Query Pix key by value |
-
-### 💓 Health Check
-- Check if the application is active:
-```bash
-GET /actuator/health
-```
-
-## **🛠️ Execution Modes**
-
-### 🔹 Without database (memory)
-1. Edit the `application.yml`:
-```yaml
-# spring.datasource.url=jdbc:postgresql://db:5432/bankapp
-# spring.datasource.username=your_user
-# spring.datasource.password=your_password
-# spring.jpa.hibernate.ddl-auto=update
-spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
-```
-
-### 🔹 With database (PostgreSQL)
-1. Create the `.env` file:
-```bash
-cp .env.example .env
-```
-
-2. Edit with your credentials:
-```env
+env
+Copy
+Edit
 DATABASE_HOST=localhost
 DATABASE_PORT=5432
 DATABASE_NAME=bankapp
 DATABASE_USER=your_username
 DATABASE_PASSWORD=your_password
-```
+3. Execution options
+A) Run without a database (in-memory mode)
+Comment out the datasource settings in src/main/resources/application.yml:
 
-3. Start PostgreSQL:
-```bash
+yaml
+Copy
+Edit
+# spring.datasource.url=jdbc:postgresql://db:5432/bankapp
+# spring.datasource.username=your_username
+# spring.datasource.password=your_password
+spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+Execute:
+
+bash
+Copy
+Edit
+mvn spring-boot:run
+B) Running with PostgreSQL via Docker
+Initialize the database with Docker Compose:
+
+bash
+Copy
+Edit
 docker-compose up -d db
-```
+Then run the application:
 
-## **🧹 Finish and Clean Up**
+bash
+Copy
+Edit
+mvn spring-boot:run
+▶️ How to run with Docker (app + bank):
+bash
+Copy
+Edit
+docker-compose up --build
+✅ Tests
+Run tests with H2 bank (in-memory):
 
-To stop and remove Docker services:
-```bash
+bash
+Copy
+Edit
+mvn test
+Build without running tests:
+
+bash
+Copy
+Edit
+mvn clean package -DskipTests
+📄 Main API endpoints
+Method Endpoint Description
+POST /api/pix Register a new Pix key
+GET /api/pix List all Pix keys
+GET /api/pix/{id} Search for Pix key by ID
+GET /api/pix/key/{key} Search for Pix key by value
+
+Health Check
+bash
+Copy
+Edit
+GET /actuator/health
+🐞 Troubleshooting - Common Problems
+Compilation error in AuthService.java:
+
+Check if the imported custom exceptions exist.
+
+If they are missing, create exception classes or adjust the imports.
+
+.env configuration:
+
+Make sure the variables are correct and without extra spaces.
+
+Check if the database is accessible at the configured URL.
+
+Failed to start Docker PostgreSQL:
+
+Check if port 5432 is free.
+
+Check the container logs with docker logs container_name.
+
+⚙️ Development Suggestions
+Standardize exceptions using custom classes.
+
+Add comments in the code for complex parts like JWT authentication.
+
+Integrate CI/CD pipelines (e.g. GitHub Actions) for test and deployment automation.
+
+Improve project security by configuring sensitive variables in .env and using Spring Security.
+
+📜 License
+This project is licensed under the MIT license. See the LICENSE file for more details.
+
+🤝 Contributions
+Contributions are welcome! To contribute:
+
+Fork the repository.
+
+Create a branch for your feature (git checkout -b feature/feature-name).
+
+Commit your changes (git commit -m 'Add new feature').
+
+Push the branch (git push origin feature/feature-name).
+
+Open a Pull Request.
+
+👤 Author
+Vinicius Alves - GitHub
+
+🧹 Cleaning up Docker Containers
+To stop and remove the Docker services used by the project:
+
+bash
+Copy
+Edit
 docker-compose down -v
-```
-
-## **📁 Jasper Reporting Framework**
-
-Make sure the `.jasper` files are in the correct directory:
-```
-src/main/resources/reports/
-```
-
-## **🤝 Contributing**
-
-Contributions are Welcome!
-
-1. Fork the project
-
-2. Create a branch: `git checkout -b feature/nova-feature`
-3. Commit: `git commit -am 'Add new feature'`
-4. Push: `git push origin feature/nova-feature`
-5. Open a Pull Request
-
-## **👥 Author**
-
-- Vinícius S. – [GitHub](https://github.com/Vinis22)
