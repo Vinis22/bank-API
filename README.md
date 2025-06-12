@@ -1,7 +1,7 @@
-bank-API - Financial Management Microservice and Pix Key System
+#bank-API - Financial Management Microservice and Pix Key System
 Project developed with Spring Boot for financial management, integrating features such as account management, transactions and Pix keys. The service is optimized for high performance, security and efficient use of memory, with support for PostgreSQL and in-memory mode for quick testing.
 
-📋 Requirements
+#📋 Requirements
 Java 21 (JDK 21+)
 
 Apache Maven 3.6+
@@ -10,7 +10,7 @@ Docker (optional, to run PostgreSQL)
 
 Git
 
-🚀 Project Configuration
+#🚀 Project Configuration
 1. Clone the repository:
 bash
 Copy
@@ -41,9 +41,9 @@ Comment out the datasource settings in src/main/resources/application.yml:
 yaml
 Copy
 Edit
-# spring.datasource.url=jdbc:postgresql://db:5432/bankapp
-# spring.datasource.username=your_username
-# spring.datasource.password=your_password
+spring.datasource.url=jdbc:postgresql://db:5432/bankapp
+spring.datasource.username=your_username
+spring.datasource.password=your_password
 spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 Execute:
 
@@ -64,12 +64,12 @@ bash
 Copy
 Edit
 mvn spring-boot:run
-▶️ How to run with Docker (app + bank):
+#▶️ How to run with Docker (app + bank):
 bash
 Copy
 Edit
 docker-compose up --build
-✅ Tests
+#✅ Tests
 Run tests with H2 bank (in-memory):
 
 bash
@@ -82,7 +82,8 @@ bash
 Copy
 Edit
 mvn clean package -DskipTests
-📄 Main API endpoints
+
+#📄 Main API endpoints
 Method Endpoint Description
 POST /api/pix Register a new Pix key
 GET /api/pix List all Pix keys
@@ -94,7 +95,8 @@ bash
 Copy
 Edit
 GET /actuator/health
-🐞 Troubleshooting - Common Problems
+
+#🐞 Troubleshooting - Common Problems
 Compilation error in AuthService.java:
 
 Check if the imported custom exceptions exist.
@@ -113,7 +115,7 @@ Check if port 5432 is free.
 
 Check the container logs with docker logs container_name.
 
-⚙️ Development Suggestions
+#⚙️ Development Suggestions
 Standardize exceptions using custom classes.
 
 Add comments in the code for complex parts like JWT authentication.
@@ -122,10 +124,10 @@ Integrate CI/CD pipelines (e.g. GitHub Actions) for test and deployment automati
 
 Improve project security by configuring sensitive variables in .env and using Spring Security.
 
-📜 License
+#📜 License
 This project is licensed under the MIT license. See the LICENSE file for more details.
 
-🤝 Contributions
+#🤝 Contributions
 Contributions are welcome! To contribute:
 
 Fork the repository.
@@ -138,10 +140,10 @@ Push the branch (git push origin feature/feature-name).
 
 Open a Pull Request.
 
-👤 Author
+#👤 Author
 Vinicius Alves - GitHub
 
-🧹 Cleaning up Docker Containers
+#🧹 Cleaning up Docker Containers
 To stop and remove the Docker services used by the project:
 
 bash
