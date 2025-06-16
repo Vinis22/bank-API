@@ -141,7 +141,7 @@ Push the branch (git push origin feature/feature-name).
 Open a Pull Request.
 
 #👤 Author
-Vinicius Alves - GitHub
+Vinicius Alencar - GitHub
 
 #🧹 Cleaning up Docker Containers
 To stop and remove the Docker services used by the project:
